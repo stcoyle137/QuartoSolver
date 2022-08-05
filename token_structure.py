@@ -79,6 +79,15 @@ class TokenManager():
     def get_bank(self):
         return self.bank
 
+    def get_remaining_bank(self):
+        bank_remaining = []
+        for i in range(0, len(self.bank)):
+            if not self.bank[i].available:
+                continue
+            bank_remaining.append((i,self.bank[i]))
+        return bank_remaining
+
+
     def get_included_attributes(self):
         return self.attributes
 

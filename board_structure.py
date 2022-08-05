@@ -54,6 +54,21 @@ class Cell():
             if a.id == -1:
                 return True
         return False
+    def try_value(self, token):
+        if not self.is_blank():
+            return False
+        self.token = token
+        good = False
+        for l in self.lines:
+            l.update_health()
+            if l.thrive:
+                good = True
+                break
+        self.token = BlankToken()
+        for l in self.lines:
+            l.update_health()
+        return good
+
 
     def reap_line(self, line):
         """Called when a line is dying. Remove line from the list"""
@@ -124,6 +139,10 @@ class Line():
             self.die = True
             self.alive = False
             return
+        else:
+            self.die = False
+            self.thrive = False
+            self.alive = True
 
     def reap(self):
         """Terminates the line and removes references from the associated cells"""
